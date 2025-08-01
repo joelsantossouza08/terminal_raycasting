@@ -1,0 +1,5 @@
+#include "map.h"
+#include "player.h"
+#include "camera.h"
+#include "move.h"
+#include "point.h"

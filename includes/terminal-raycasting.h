@@ -3,3 +3,5 @@
 #include "camera.h"
 #include "move.h"
 #include "point.h"
+#include "screen.h"
+#include "pixel.h"

@@ -1,5 +1,5 @@
 CC=cc
-FLAGS=-Wall -Wextra -Werror -pedantic -g
+FLAGS=-Wall -Wextra -Werror -g
 DEPS=srcs/main.o $(patsubst %.c, %.o, $(wildcard lib/*.c))
 
 a.out: $(DEPS)

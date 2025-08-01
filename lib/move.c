@@ -92,7 +92,7 @@ int move(t_moves key, t_point *point, double *angle, t_map map)
 		moved = createNextPoint(*point, *angle, STEP * SPEED, ROUND);
 	else if (keyPressed == key.down)
 		moved = createNextPoint(*point, *angle, -STEP * SPEED, ROUND);
-	if ((keyPressed == key.up || keyPressed == key.down) && inLimit(moved, map) && !isElement(moved, WALL, map))
+	if ((keyPressed == key.up || keyPressed == key.down) && inMapLimit(moved, map) && !isElement(moved, WALL, map))
 		*point = moved;
 	return 1;
 }

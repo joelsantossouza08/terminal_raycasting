@@ -4,14 +4,14 @@
 #include "map.h"
 
 // UTILS FUNCTIONS
-int inLimit(t_point point, t_map map)
+int inMapLimit(t_point point, t_map map)
 {
 	return point.x >= 0 && point.x < map.width && point.y >= 0 && point.y < map.height;
 }
 
 int isElement(t_point point, int element, t_map map)
 {
-	if (!inLimit(point, map))
+	if (!inMapLimit(point, map))
 		return -1;
 	return map.data[point.x][point.y] == element;
 }
@@ -100,7 +100,7 @@ void printMap(t_map map)
 // ADD ELEMENT TO MAP
 void putPoint(t_point point, t_map map, int element)
 {
-	if (map.data && inLimit(point, map))
+	if (map.data && inMapLimit(point, map))
 		map.data[point.x][point.y] = element;
 	return;
 }
@@ -118,7 +118,7 @@ void putPointSize(t_point point, int size, t_map map, int element)
 
 void clrPoint(t_point point, t_map map)
 {
-	if (map.data && inLimit(point, map))
+	if (map.data && inMapLimit(point, map))
 		map.data[point.x][point.y] = EMPTY;
 	return;
 }

@@ -6,7 +6,7 @@
 #define EMPTY		0
 #define WALL		1
 #define PLAYER	2
-#define CAMERA  3
+#define CAMERA 	3
 #define RAY			4
 #define HORIZ_GRID	5
 #define VERT_GRID		6
@@ -29,7 +29,7 @@ typedef struct
 	int **data;
 } t_map;
 
-int		inLimit(t_point point, t_map map);
+int		inMapLimit(t_point point, t_map map);
 int		isElement(t_point point, int element, t_map map);
 
 int		makeMap(t_map *map, unsigned int width, unsigned int height, unsigned int tilesize);

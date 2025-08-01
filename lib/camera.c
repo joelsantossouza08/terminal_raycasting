@@ -121,7 +121,7 @@ t_ray *hitWall(t_ray *horiz, t_ray *vert, t_map map)
 {
 	if (horiz->len <= vert->len)
 	{
-		if (isElement(horiz->point, WALL, map) || !inLimit(horiz->point, map))
+		if (isElement(horiz->point, WALL, map) || !inMapLimit(horiz->point, map))
 			return horiz;
 		horiz->point.x += horiz->dist.x;
 		horiz->point.y += horiz->dist.y;
@@ -129,7 +129,7 @@ t_ray *hitWall(t_ray *horiz, t_ray *vert, t_map map)
 	}
 	else
 	{
-		if (isElement(vert->point, WALL, map) || !inLimit(vert->point, map))
+		if (isElement(vert->point, WALL, map) || !inMapLimit(vert->point, map))
 			return vert;
 		vert->point.x += vert->dist.x;
 		vert->point.y += vert->dist.y;

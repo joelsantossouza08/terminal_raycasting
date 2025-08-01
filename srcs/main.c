@@ -8,20 +8,20 @@
 
 int main(void)
 {
-//	t_map map;
-//	t_camera camera;
+	t_map map;
+	t_camera camera;
 //	t_point center;
-//	t_moves key;
+	t_moves key;
 //
 //	(void)center;
 //	stdInitTerminal();
-//	map = createMap(10, 10, 10);
+	map = createMap(10, 10, 10);
 //
 //	center = createPoint(map.width/2, map.height/2);
 //
-//	camera = createCamera(createPoint(39, 98), ANGLE, FOV, 100);
+	camera = createCamera(createPoint(39, 98), ANGLE, FOV, 20);
 //
-//	key = createKeys('w', 'a', 's', 'd');
+	key = createKeys('w', 'a', 's', 'd');
 //
 //	putPointSize(createPoint(0, map.height-map.tilesize), map.tilesize, map, WALL);
 //	putPointSize(createPoint(1*map.tilesize, map.height-map.tilesize*2), map.tilesize, map, WALL);
@@ -47,9 +47,16 @@ int main(void)
 //	}
 //	freeMap(map);
 //	freeCamera(camera);
+	t_screen screen;
 	t_brightness brightness;
 
-	brightness = createBrightness(50, "eojfeojfoejfoejofj");
+	brightness = createBrightness(50, "'.*(L#");
+	screen = createScreen(20, 20, FOV, brightness);
+
+	moveCamera(&camera, key, map);
+
+	make3DVision(camera, screen, map.tilesize*2, brightness.range/2);
+	printScreen(screen);
 	(void)brightness;
 	return 0;
 }	

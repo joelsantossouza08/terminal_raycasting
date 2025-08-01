@@ -1,8 +1,7 @@
 #ifndef PIXEL_H
 #define PIXEL_H
 
-#define MAX_SCALE 100
-
+#define NOCOLOR	""
 #define RESET		"\e[0m"
 #define WHITE 	"\e[0;37m"
 #define BLACK 	"\e[0;30m"
@@ -16,8 +15,8 @@
 typedef struct
 {
 	int 	vision;
-	int		size;
-	char	scale[MAX_SCALE];
+	int 	range;
+	char	*scale;
 } t_brightness;
 
 typedef struct
@@ -31,6 +30,8 @@ t_brightness	createBrightness(unsigned int vision, char *scale);
 
 void					makePixel(t_pixel *pixel, char *color, char luminosity);
 t_pixel				createPixel(char *color, char luminosity);
+
+int						getBrightness(int luminosity, t_brightness brightness, int dist);
 
 void					printPixel(t_pixel pixel);
 

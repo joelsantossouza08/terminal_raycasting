@@ -11,8 +11,8 @@ int makeBrightness(t_brightness *brightness, unsigned int vision, char *scale)
 		return 0;
 	}
 	brightness->vision = vision;
-	brightness->size 	 = strlen(scale);
-	strncpy(brightness->scale, scale, MAX_SCALE-1);
+	brightness->range = strlen(scale);
+	brightness->scale = scale;
 	return 0;
 }
 
@@ -44,4 +44,17 @@ void printPixel(t_pixel pixel)
 {
 	printf("%s%c%s", pixel.color, pixel.luminosity, RESET);
 	return;
+}
+
+// GET
+int getBrightness(int luminosity, t_brightness brightness, int dist)
+{
+	if (!brightness.scale)
+		return ' ';
+	luminosity *= brightness.vision / dist;	
+	if (luminosity >= brightness.range)
+		luminosity = brightness.range-1;
+	else if (luminosity < 0)
+		luminosity = 0;
+	return brightness.scale[luminosity];
 }

@@ -13,7 +13,7 @@
 #define VERT_GRID		6
 #define CORNER_GRID	7
 
-#define CHR_EMPTY		'.'
+#define CHR_EMPTY		' '
 #define CHR_WALL		'#'
 #define CHR_PLAYER	'@'
 #define CHR_CAMERA	'>'

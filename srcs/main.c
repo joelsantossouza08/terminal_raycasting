@@ -20,27 +20,26 @@ int main(void)
 	stdInitTerminal();
 	importMap(&map, 100, "test.map", 1024);
 
-	center = createPoint(map.width/2, map.height/2);
+	center = createPoint(2*map.tilesize-2, map.height-2*map.tilesize);
 
-	camera = createCamera(center, ANGLE, FOV, 600);
+	camera = createCamera(center, ANGLE, FOV, 200);
 
 	key = createKeys('w', 'a', 's', 'd');
 
 	vision = createDPoint(200, 20);
 	brightness = createBrightness(vision, " `.-':_,^=;><+!rc*/z?sLTv)J7(|Fi{C}fI31tlu[neoZ5Yxjya]2ESwqkP6h9d4VpOGbUAKXHm8RD#$Bg0MNWQ%&@");
 
-	screen = createScreen(600, 150, FOV, brightness);
+	screen = createScreen(200, 50, FOV, brightness);
 
 	while (1)
 	{
 		if (!moveCamera(&camera, key, map))
 			break;
 		//putCamera(camera, map, ALL);
-		//putGrid(map.tilesize, map.tilesize, map);
 		//printMap(map);
 		//clrCamera(camera, map, ALL);
 
-		make3DVision(camera, screen, map.tilesize*2, brightness.range/2);
+		make3DVision(camera, screen, map.tilesize, brightness.range/2);
 		printScreen(screen);
 	}
 	freeMap(map);

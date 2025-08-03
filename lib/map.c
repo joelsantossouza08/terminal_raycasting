@@ -268,21 +268,21 @@ int importMap(t_map *map, unsigned int tilesize, char *filePath, size_t bufsize)
 
 	file = fopen(filePath, "r");
 	line = 0;
-	if (!file || getline(&line, &bufsize, file) <= 0)
+	if (!file)
 		return makeMap(map, 0, 0, 0);	
-	if (!makeMap(map, wdCount(line, " "), linefCount(file, bufsize) + 1, tilesize))
+	if (!makeMap(map, wdLinefCount(file, " ", bufsize), linefCount(file, bufsize), tilesize))
 		return 0;
 	p.y = map->height / map->tilesize;
 	while (--p.y >= 0 && (p.x = map->width / map->tilesize))
 	{
+		getline(&line, &bufsize, file);
 		data = split(line, " ");
 		if (!data)
 			return makeMap(map, 0, 0, 0);
 		while (--p.x >= 0)
 			putPointSize(createProductPoint(p, tilesize, tilesize), tilesize, *map, atoi(*(data+p.x)));
-		data = realloc(data, 0);
 		line = realloc(line, 0);
-		getline(&line, &bufsize, file);
+		freeSplited(&data);
 	}
 	fclose(file);
 	return 1;

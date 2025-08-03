@@ -39,17 +39,34 @@ int linefCount(FILE *file, size_t bufsize)
   char *line;
 	size_t offset;
   int nlines;
+	int nbytes;
 
   line = 0;
 	offset = ftell(file);
-  nlines = 0;
-  while (getline(&line, &bufsize, file) > 0)
+  nlines = -1;
+	nbytes = 1;
+  while (nbytes > 0)
 	{
+		nbytes = getline(&line, &bufsize, file);
 		line = realloc(line, 0);
     nlines++;
 	}
 	fseek(file, offset, SEEK_SET);
   return nlines;
+}
+
+int wdLinefCount(FILE *file, char *delim, size_t bufsize)
+{
+	char *line;
+	int nwords;
+	size_t offset;
+
+	offset = ftell(file);
+	getline(&line, &bufsize, file);
+	nwords = wdCount(line, delim);
+	line = realloc(line, 0);
+	fseek(file, offset, SEEK_SET);
+	return nwords;
 }
 
 char *strnCpy(char *dest, char *src, unsigned int n)
@@ -102,4 +119,20 @@ char **split(char *str, char *delim)
 		arr = 0;
 	}
 	return arr;
+}
+
+void freeSplited(char ***splited)
+{
+	char **p;
+
+	if (!*splited)
+		return;
+	p = *splited;
+	while (*p)
+	{
+		*p = realloc(*p, 0);
+		p++;
+	}
+	*splited = realloc(*splited, 0);
+	return;
 }

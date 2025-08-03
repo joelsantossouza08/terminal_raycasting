@@ -1,6 +1,8 @@
 #ifndef PIXEL_H
 #define PIXEL_H
 
+#include "camera.h"
+
 #define NOCOLOR	""
 #define RESET		"\e[0m"
 #define WHITE 	"\e[0;37m"
@@ -14,9 +16,9 @@
 
 typedef struct
 {
-	int 	vision;
-	int 	range;
-	char	*scale;
+	t_dpoint	vision;
+	int 			range;
+	char			*scale;
 } t_brightness;
 
 typedef struct
@@ -25,13 +27,13 @@ typedef struct
 	char luminosity;
 } t_pixel;
 
-int						makeBrightness(t_brightness *brightness, unsigned int vision, char *scale);
-t_brightness	createBrightness(unsigned int vision, char *scale);
+int						makeBrightness(t_brightness *brightness, t_dpoint vision, char *scale);
+t_brightness	createBrightness(t_dpoint vision, char *scale);
 
 void					makePixel(t_pixel *pixel, char *color, char luminosity);
 t_pixel				createPixel(char *color, char luminosity);
 
-int						getBrightness(int luminosity, t_brightness brightness, int dist);
+int						getBrightness(int luminosity, t_brightness brightness, t_ray ray);
 
 void					printPixel(t_pixel pixel);
 

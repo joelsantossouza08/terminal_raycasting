@@ -96,6 +96,7 @@ void initHorizCast(t_ray *horiz, t_point start, double angle, t_map map)
 	horiz->dist.x = horiz->dist.y / angle;
 	makePointsLen(&horiz->len, start, horiz->point);
 	horiz->dist.len = sqrt(SQUARE(horiz->dist.y) + SQUARE(horiz->dist.x));	
+	horiz->dist.dir = HORIZ;
 	return;
 }
 
@@ -114,6 +115,7 @@ void initVertCast(t_ray *vert, t_point start, double angle, t_map map)
 	vert->dist.y = vert->dist.x * angle;
 	makePointsLen(&vert->len, start, vert->point);
 	vert->dist.len = sqrt(SQUARE(vert->dist.y) + SQUARE(vert->dist.x));
+	vert->dist.dir = VERT;
 	return;
 }
 
@@ -245,9 +247,10 @@ void clrCamera(t_camera camera, t_map map, int flags)
 // MOTION
 int moveCamera(t_camera *camera, t_moves key, t_map map)
 {
-	if (!map.data || !move(key, &camera->point, &camera->angle, map))
+	if (!map.data || !moveInMap(key, &camera->point, &camera->angle, map))
 		return 0;
 	// TEST !!!
+	// CREATE RAYSCASTING
 	makeEuclideanRays(*camera);
 	int i;
 

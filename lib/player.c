@@ -22,7 +22,7 @@ t_player createPlayer(t_point point, t_camera camera, t_moves key, t_raytype ray
 // MOTIONS
 int movePlayer(t_player *player, t_map map)
 {
-	if (!map.data || !move(player->key, &player->point, &player->camera.angle, map))
+	if (!map.data || !moveInMap(player->key, &player->point, &player->camera.angle, map))
 		return 0;
 	//rayscasting(player->camera, player->raytype, map);
 	return 1;

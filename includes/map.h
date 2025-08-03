@@ -1,6 +1,7 @@
 #ifndef MAP_H
 #define MAP_H
 
+#include <stdio.h>
 #include "point.h"
 
 #define EMPTY		0
@@ -12,7 +13,7 @@
 #define VERT_GRID		6
 #define CORNER_GRID	7
 
-#define CHR_EMPTY		' '
+#define CHR_EMPTY		'.'
 #define CHR_WALL		'#'
 #define CHR_PLAYER	'@'
 #define CHR_CAMERA	'>'
@@ -34,6 +35,8 @@ int		isElement(t_point point, int element, t_map map);
 
 int		makeMap(t_map *map, unsigned int width, unsigned int height, unsigned int tilesize);
 t_map createMap(unsigned int width, unsigned int height, unsigned int tilesize);
+int		importMap(t_map *map, unsigned int tilesize, char *filePath, size_t bufsize);
+
 void	freeMap(t_map map);
 void	printMap(t_map map);
 

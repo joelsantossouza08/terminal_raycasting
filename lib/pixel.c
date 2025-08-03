@@ -1,11 +1,12 @@
 #include <stdio.h>
 #include <string.h>
+#include <math.h>
 #include "pixel.h"
 
 // INITIALIZE FUNCTIONS
-int makeBrightness(t_brightness *brightness, unsigned int vision, char *scale)
+int makeBrightness(t_brightness *brightness, t_dpoint vision, char *scale)
 {
-	if (!scale)
+	if (!scale || vision.x < 0 || vision.y < 0)
 	{
 		memset(brightness, 0, sizeof(*brightness));
 		return 0;
@@ -16,7 +17,7 @@ int makeBrightness(t_brightness *brightness, unsigned int vision, char *scale)
 	return 0;
 }
 
-t_brightness createBrightness(unsigned int vision, char *scale)
+t_brightness createBrightness(t_dpoint vision, char *scale)
 {
 	t_brightness brightness;
 
@@ -47,11 +48,14 @@ void printPixel(t_pixel pixel)
 }
 
 // GET
-int getBrightness(int luminosity, t_brightness brightness, int dist)
+int getBrightness(int luminosity, t_brightness brightness, t_ray ray)
 {
 	if (!brightness.scale)
 		return ' ';
-	luminosity *= brightness.vision / dist;	
+	if (ray.dist.dir == HORIZ)
+		luminosity = round((double) brightness.vision.x / ray.len * luminosity);
+	else
+		luminosity = round((double) brightness.vision.y / ray.len * luminosity);
 	if (luminosity >= brightness.range)
 		luminosity = brightness.range-1;
 	else if (luminosity < 0)

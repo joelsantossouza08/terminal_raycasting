@@ -82,6 +82,19 @@ t_point createAddedPoint(t_point point, int x, int y)
 	return point;
 }
 
+void makeProductPoint(t_point *point, int x, int y)
+{
+	point->x *= x;
+	point->y *= y;
+	return;
+}
+
+t_point createProductPoint(t_point point, int x, int y)
+{
+	makeProductPoint(&point, x, y);
+	return point;
+}
+
 void makeSumPoints(t_point *p1, t_point p2)
 {
 	p1->x += p2.x;
@@ -167,19 +180,20 @@ int createPointsLen(t_point p1, t_point p2)
 	return len;
 }
 
-void makeDist(t_dist *dist, t_point p1, t_point p2)
+void makeDist(t_dist *dist, t_point p1, t_point p2, int dir)
 {
 	dist->x = p2.x - p1.x;
 	dist->y = p2.y - p1.y;
 	dist->len = createPointsLen(p1, p2);
+	dist->dir = dir;
 	return;
 }
 
-t_dist createDist(t_point p1, t_point p2)
+t_dist createDist(t_point p1, t_point p2, int dir)
 {
 	t_dist dist;
 
-	makeDist(&dist, p1, p2);
+	makeDist(&dist, p1, p2, dir);
 	return dist;
 }
 

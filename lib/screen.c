@@ -108,35 +108,6 @@ void clrScreen(t_screen screen)
 	return;
 }
 
-// RENDER 3D MAP
-void make3DVision(t_camera camera, t_screen screen, unsigned int wallHeight, int luminosity)
-{
-	t_point line;
-	t_point p1;
-	t_point p2;
-	t_pixel pixel;
-	int i;
-
-	if (!screen.pixels || !camera.rays || camera.nrays > screen.width)
-		return;
-	clrScreen(screen);
-	line.x = screen.width / camera.nrays;
-	while (camera.nrays--)
-	{
-		line.y = round((double) wallHeight / camera.rays[camera.nrays].len * screen.planeDist);
-		pixel = createPixel(BLUE, getBrightness(luminosity, screen.brightness, camera.rays[camera.nrays].len));
-		p1.y = screen.height / 2 - line.y / 2;
-		p2.y = p1.y + line.y;
-		i = -1;
-		while (++i < line.x)
-		{
-			p1.x = p2.x = screen.width--;
-			putPixelLine(p1, p2, screen, pixel);
-		}
-	}
-	return;
-}
-
 // DISPLAY
 void printScreen(t_screen screen)
 {
@@ -151,6 +122,35 @@ void printScreen(t_screen screen)
 		while (++p.x < screen.width)
 			printPixel(screen.pixels[p.x][p.y]);
 		printf("\n");
+	}
+	return;
+}
+
+// RENDER 3D MAP
+void make3DVision(t_camera camera, t_screen screen, unsigned int wallHeight, int luminosity)
+{
+	t_point line;
+	t_point p1;
+	t_point p2;
+	t_point dimension;
+	t_pixel pixel;
+
+	if (!screen.pixels || !camera.rays || camera.nrays > screen.width)
+		return;
+	clrScreen(screen);
+	line.x = screen.width / camera.nrays;
+	dimension.x = -1;
+	while (camera.nrays-- && (dimension.y = -1))
+	{
+		line.y = round((double) wallHeight / camera.rays[camera.nrays].len * screen.planeDist);
+		pixel = createPixel(BLUE, getBrightness(luminosity, screen.brightness, camera.rays[camera.nrays]));
+		p1.y = screen.height / 2 - line.y / 2;
+		p2.y = p1.y + line.y;
+		while (++dimension.y < line.x)
+		{
+			p1.x = p2.x = ++dimension.x;
+			putPixelLine(p1, p2, screen, pixel);
+		}
 	}
 	return;
 }

@@ -1,7 +1,11 @@
-#include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
 #include <math.h>
+#include "split.h"
 #include "map.h"
+
+#define BUFSIZE 1024
 
 // UTILS FUNCTIONS
 int inMapLimit(t_point point, t_map map)
@@ -75,9 +79,7 @@ void printMap(t_map map)
 	{
 		while (++p.x < map.width)
 		{
-			if (map.data[p.x][p.y] == EMPTY)
-				printf("%c ", CHR_EMPTY);
-			else if (map.data[p.x][p.y] == WALL)
+			if (map.data[p.x][p.y] == WALL)
 				printf("%c ", CHR_WALL);
 			else if (map.data[p.x][p.y] == PLAYER)
 				printf("%c ", CHR_PLAYER);
@@ -91,6 +93,8 @@ void printMap(t_map map)
 				printf("%c ", CHR_VERT_GRID);
 			else if (map.data[p.x][p.y] == CORNER_GRID)
 				printf("%c ", CHR_CORNER_GRID);
+			else
+				printf("%c ", CHR_EMPTY);
 		}
 		printf("\n");
 	}
@@ -109,10 +113,14 @@ void putPointSize(t_point point, int size, t_map map, int element)
 {
 	t_point p;
 
+	if (!element)
+		return;
+	if (size == 1)
+		size--;
 	p.x = -1;
 	while (++p.x <= size && (p.y = -1))
 			while (++p.y <= size)
-				putPoint(createSumPoints(point, p), map, element);
+			putPoint(createSumPoints(point, p), map, element);
 	return;
 }
 
@@ -127,6 +135,8 @@ void clrPointSize(t_point point, int size, t_map map)
 {
 	t_point p;
 
+	if (size == 1)
+		size--;
 	p.x = -1;
 	while (++p.x <= size && (p.y = -1))
 			while (++p.y <= size)
@@ -163,6 +173,8 @@ void putGrid(int width, int height, t_map map)
 {
 	t_point p;
 
+	if (!width || !height || !map.data)
+		return;
 	p.y = map.height;
 	while (p.y >= 0 && (p.x = -1))
 	{
@@ -176,12 +188,7 @@ void putGrid(int width, int height, t_map map)
 	{
 		while (++p.y < map.height)
 			if (isElement(p, EMPTY, map))
-			{
-				if (p.y % height)
-					putPoint(p, map, VERT_GRID);
-				else
-					putPoint(p, map, CORNER_GRID);
-			}
+				p.y % height ? putPoint(p, map, VERT_GRID) : putPoint(p, map, CORNER_GRID);
 		p.x -= width;
 	}
 	return;
@@ -249,5 +256,35 @@ void makeZoom(t_map *zoomed, t_map map, double zoom, t_point center)
 				putPoint(zp, *zoomed, map.data[p.x][p.y]);
 			}
 	return;	
+}
+
+// IMPORT MAPS
+int importMap(t_map *map, unsigned int tilesize, char *filePath, size_t bufsize)
+{
+	FILE *file;
+	char *line;
+	char **data;
+	t_point p;
+
+	file = fopen(filePath, "r");
+	line = 0;
+	if (!file || getline(&line, &bufsize, file) <= 0)
+		return makeMap(map, 0, 0, 0);	
+	if (!makeMap(map, wdCount(line, " "), linefCount(file, bufsize) + 1, tilesize))
+		return 0;
+	p.y = map->height / map->tilesize;
+	while (--p.y >= 0 && (p.x = map->width / map->tilesize))
+	{
+		data = split(line, " ");
+		if (!data)
+			return makeMap(map, 0, 0, 0);
+		while (--p.x >= 0)
+			putPointSize(createProductPoint(p, tilesize, tilesize), tilesize, *map, atoi(*(data+p.x)));
+		data = realloc(data, 0);
+		line = realloc(line, 0);
+		getline(&line, &bufsize, file);
+	}
+	fclose(file);
+	return 1;
 }
 

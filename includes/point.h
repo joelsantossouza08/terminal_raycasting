@@ -13,6 +13,9 @@
 
 #define ROUND 1
 
+#define HORIZ 0
+#define VERT	1
+
 typedef struct
 {
 	double x;
@@ -30,6 +33,7 @@ typedef struct
 	int x;
 	int y;
 	int len;
+	int dir;
 } t_dist;
 
 typedef 	t_point t_vector;
@@ -47,13 +51,16 @@ t_dvector createDVector(t_dpoint p1, t_dpoint p2);
 void			makeVector(t_vector *vector, t_point p1, t_point p2);
 t_vector	createVector(t_point p1, t_point p2);
 
-void			makeDist(t_dist *dist, t_point p1, t_point p2);
-t_dist		createDist(t_point p1, t_point p2);
+void			makeDist(t_dist *dist, t_point p1, t_point p2, int dir);
+t_dist		createDist(t_point p1, t_point p2, int dir);
 
 int				isPointsEqual(t_point a, t_point b);
 
 void			makeAddedPoint(t_point *point, int x, int y);
 t_point		createAddedPoint(t_point point, int x, int y);
+void			makeProductPoint(t_point *point, int x, int y);
+t_point		createProductPoint(t_point point, int x, int y);
+
 void			makeSumPoints(t_point *p1, t_point p2);
 t_point		createSumPoints(t_point p1, t_point p2);
 

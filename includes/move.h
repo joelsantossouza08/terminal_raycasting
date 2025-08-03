@@ -27,6 +27,6 @@ void		initTerminal(unsigned int flags, int time);
 void		stdInitTerminal(void);
 void		userConfigKeys(t_moves *key);
 
-int			move(t_moves key, t_point *point, double *angle, t_map map);
+int			moveInMap(t_moves key, t_point *point, double *angle, t_map map);
 
 #endif

@@ -74,7 +74,7 @@ void userConfigKeys(t_moves *key)
 }
 
 // MOVE IN MAP
-int move(t_moves key, t_point *point, double *angle, t_map map)
+int moveInMap(t_moves key, t_point *point, double *angle, t_map map)
 {
 	t_point moved;
 	char keyPressed;

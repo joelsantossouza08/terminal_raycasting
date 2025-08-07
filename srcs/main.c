@@ -18,7 +18,7 @@ int main(void)
 	t_dpoint vision;
 
 	stdInitTerminal();
-	importMap(&map, 3, "maps/map0.txt", 1024);
+	importMap(&map, 100, "maps/map1.txt", 1024);
 
 	center = createPoint(1*map.tilesize+1, 1*map.tilesize+1);
 
@@ -35,12 +35,12 @@ int main(void)
 	{
 		if (!moveCamera(&camera, key, map))
 			break;
-		putCamera(camera, map, RENDER_CAMERA | RENDER_RAYSLINE);
-		printMap(map);
-		clrCamera(camera, map, RENDER_CAMERA | RENDER_RAYSLINE);
+		//putCamera(camera, map, RENDER_CAMERA | RENDER_RAYSLINE);
+		//printMap(map);
+		//clrCamera(camera, map, RENDER_CAMERA | RENDER_RAYSLINE);
 
-		//make3DVision(camera, screen, map.tilesize*4, brightness.range/2);
-		//printScreen(screen);
+		make3DVision(camera, screen, map.tilesize*4, brightness.range/2);
+		printScreen(screen);
 	}
 	freeMap(map);
 	freeCamera(camera);

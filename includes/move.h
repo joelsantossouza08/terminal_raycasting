@@ -10,7 +10,7 @@
 
 #define ROTATION 0.01
 #define STEP 1
-#define SPEED 2
+#define SPEED 10
 
 typedef struct
 {

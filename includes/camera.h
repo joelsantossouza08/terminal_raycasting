@@ -36,7 +36,6 @@ int 			makeCamera(t_camera *camera, t_point point, double angle, double fov, uns
 t_camera	createCamera(t_point point, double angle, double fov, unsigned int nrays);
 
 void 			makeEuclideanRays(t_camera camera);
-void  		makePerpendicularRays(t_camera camera);
 
 void  		rayscasting(t_camera camera, t_raytype raytype, t_map map);
 void			makeRaycasting(t_ray *ray, t_map map);

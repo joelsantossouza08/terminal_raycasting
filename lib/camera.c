@@ -74,12 +74,6 @@ void makeEuclideanRays(t_camera camera)
   return;
 }
 
-void makePerpendicularRays(t_camera camera)
-{
-  (void)camera;
-  return;
-}
-
 // RAYCASTING
 void initHorizCast(t_ray *horiz, t_point start, double angle, t_map map)
 {
@@ -247,13 +241,11 @@ void clrCamera(t_camera camera, t_map map, int flags)
 // MOTION
 int moveCamera(t_camera *camera, t_moves key, t_map map)
 {
-	if (!map.data || !moveInMap(key, &camera->point, &camera->angle, map))
-		return 0;
-	// TEST !!!
-	// CREATE RAYSCASTING
-	makeEuclideanRays(*camera);
 	int i;
 
+	if (!map.data || !moveInMap(key, &camera->point, &camera->angle, map))
+		return 0;
+	makeEuclideanRays(*camera);
 	i = -1;
 	while (++i < camera->nrays)
 		makeRaycasting(&camera->rays[i], map);

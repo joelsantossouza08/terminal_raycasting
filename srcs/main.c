@@ -18,29 +18,29 @@ int main(void)
 	t_dpoint vision;
 
 	stdInitTerminal();
-	importMap(&map, 100, "test.map", 1024);
+	importMap(&map, 3, "maps/map0.txt", 1024);
 
-	center = createPoint(2*map.tilesize-2, map.height-2*map.tilesize);
+	center = createPoint(1*map.tilesize+1, 1*map.tilesize+1);
 
-	camera = createCamera(center, ANGLE, FOV, 200);
+	camera = createCamera(center, ANGLE, FOV, 150);
 
 	key = createKeys('w', 'a', 's', 'd');
 
-	vision = createDPoint(200, 20);
+	vision = createDPoint(100, 10);
 	brightness = createBrightness(vision, " `.-':_,^=;><+!rc*/z?sLTv)J7(|Fi{C}fI31tlu[neoZ5Yxjya]2ESwqkP6h9d4VpOGbUAKXHm8RD#$Bg0MNWQ%&@");
 
-	screen = createScreen(200, 50, FOV, brightness);
+	screen = createScreen(150, 100, FOV, brightness);
 
 	while (1)
 	{
 		if (!moveCamera(&camera, key, map))
 			break;
-		//putCamera(camera, map, ALL);
-		//printMap(map);
-		//clrCamera(camera, map, ALL);
+		putCamera(camera, map, RENDER_CAMERA | RENDER_RAYSLINE);
+		printMap(map);
+		clrCamera(camera, map, RENDER_CAMERA | RENDER_RAYSLINE);
 
-		make3DVision(camera, screen, map.tilesize, brightness.range/2);
-		printScreen(screen);
+		//make3DVision(camera, screen, map.tilesize*4, brightness.range/2);
+		//printScreen(screen);
 	}
 	freeMap(map);
 	freeCamera(camera);

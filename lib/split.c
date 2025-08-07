@@ -18,19 +18,17 @@ char *skip(char *str, char *chrs)
 
 int wdCount(char *str, char *delim)
 {
-	char *begin;
   int nwords;
 
 	nwords = 0;
-	begin = str = skip(str, delim);
   while (*str)
-    if (isChrs(*str++, delim))
-    {   
-      nwords++;
-			str = skip(str, delim);
-    }   
-	if (str > begin && !isChrs(*(str-1), delim))
-		nwords++;
+	{
+		str = skip(str, delim);
+		if (*str)
+			nwords++;
+		while (*str && !isChrs(*str, delim))
+			str++;
+	}
 	return nwords;
 }
 
@@ -57,13 +55,26 @@ int linefCount(FILE *file, size_t bufsize)
 
 int wdLinefCount(FILE *file, char *delim, size_t bufsize)
 {
-	char *line;
+	int offset;
 	int nwords;
-	size_t offset;
+	char *line;
 
 	offset = ftell(file);
+	line = 0;
 	getline(&line, &bufsize, file);
 	nwords = wdCount(line, delim);
+	while (1)
+	{
+		line = realloc(line, 0);
+		if (getline(&line, &bufsize, file) <= 0)
+			break;
+		if (wdCount(line, delim) != nwords)
+		{
+			printf("There are lines with different sizes\n");
+			line = realloc(line, 0);
+			return 0;
+		}
+	}
 	line = realloc(line, 0);
 	fseek(file, offset, SEEK_SET);
 	return nwords;

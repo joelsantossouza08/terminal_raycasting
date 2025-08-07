@@ -18,6 +18,8 @@ void			freeScreen(t_screen screen);
 int				makeScreen(t_screen *screen, unsigned int width, unsigned int height, double fov, t_brightness brightness);
 t_screen	createScreen(unsigned int width, unsigned int height, double fov, t_brightness brightness);
 
+void			clrScreen(t_screen screen);
+
 void			putPixel(t_point point, t_screen screen, t_pixel pixel);
 void			clrPixel(t_point point, t_screen screen);
 void			putPixelLine(t_point p1, t_point p2, t_screen screen, t_pixel pixel);

@@ -42,7 +42,7 @@ of a ray. To calculate the ray length I used the following algorithm:
     - In the player's direction we get the next position of the closest tilesize grid, 
     because if the map is made by blocks, a wall can appear in each block of the map
     - Then we check if the current block position is a wall. if it is, so we stop the loop
-    and calculate the distance of the ray using the hypothenisis: 
+    and calculate the distance of the ray using the hypotenuse
     sqrt(cathetus1 * cathetus1 + cathetus2 * cathetus2)
     - This value is stored in a array of rays of the camera, and then, is done the same thing
     to the other rays

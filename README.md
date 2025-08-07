@@ -1,7 +1,7 @@
-Terminal Raycasting
+# Terminal Raycasting
 #### Video Demo: https://youtu.be/Y5R43J6mi88
 
-Description:
+#### Description:
 In this project, my goal was achieve a mini raycasting game, running on terminal,
 where the color and the light of each pixel would be determined for the color and
 the density of a character. To do that my program is divided in 3 general parts.
